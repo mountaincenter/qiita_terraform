@@ -63,7 +63,8 @@
     "portMappings": [
       {
         "protocol": "tcp",
-        "containerPort": 80
+        "hostPort": 8080,
+        "containerPort": 8080
       }
     ],
     "workingDirectory": "/sample",
