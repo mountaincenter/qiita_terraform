@@ -1,60 +1,41 @@
 class TodosController < ApplicationController
-  before_action :set_todo, only: %i[ show edit update destroy ]
+  before_action :set_todo, only: %i[ show update destroy ]
 
-  # GET /todos or /todos.json
+  # GET /todos
   def index
     @todos = Todo.all
+
+    render json: @todos
   end
 
-  # GET /todos/1 or /todos/1.json
+  # GET /todos/1
   def show
+    render json: @todo
   end
 
-  # GET /todos/new
-  def new
-    @todo = Todo.new
-  end
-
-  # GET /todos/1/edit
-  def edit
-  end
-
-  # POST /todos or /todos.json
+  # POST /todos
   def create
     @todo = Todo.new(todo_params)
 
-    respond_to do |format|
-      if @todo.save
-        format.html { redirect_to todo_url(@todo), notice: "Todo was successfully created." }
-        format.json { render :show, status: :created, location: @todo }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @todo.errors, status: :unprocessable_entity }
-      end
+    if @todo.save
+      render json: @todo, status: :created, location: @todo
+    else
+      render json: @todo.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /todos/1 or /todos/1.json
+  # PATCH/PUT /todos/1
   def update
-    respond_to do |format|
-      if @todo.update(todo_params)
-        format.html { redirect_to todo_url(@todo), notice: "Todo was successfully updated." }
-        format.json { render :show, status: :ok, location: @todo }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @todo.errors, status: :unprocessable_entity }
-      end
+    if @todo.update(todo_params)
+      render json: @todo
+    else
+      render json: @todo.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /todos/1 or /todos/1.json
+  # DELETE /todos/1
   def destroy
     @todo.destroy
-
-    respond_to do |format|
-      format.html { redirect_to todos_url, notice: "Todo was successfully destroyed." }
-      format.json { head :no_content }
-    end
   end
 
   private

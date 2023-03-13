@@ -21,4 +21,4 @@ RUN mkdir -p tmp/pids
 VOLUME $APP_PATH/public
 VOLUME $APP_PATH/tmp
 
-RUN SECRET_KEY_BASE=placeholder bundle exec rails assets:precompile
+# RUN SECRET_KEY_BASE=placeholder bundle exec rails assets:precompile
